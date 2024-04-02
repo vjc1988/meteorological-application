@@ -80,6 +80,30 @@ strong {
   margin-top: 4px;
   font-size: 22px;
 }
+
+.weather-forecast {
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.weather-forecast-date {
+  font-size: 16px;
+  color: rgba(39, 33, 66, 0.4);
+}
+
+.weather-forecast-temperatures {
+  font-size: 14px;
+}
+
+.weather-forecast-temp-max {
+  color: #ff895d;
+  font-weight: bold;
+}
+
+.weather-forecast-temp-min {
+  color: #ff895d;
+  opacity: 0.6;
+}
 a {
   color: #007cb9;
 }

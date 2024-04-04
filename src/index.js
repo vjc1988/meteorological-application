@@ -57,4 +57,24 @@ function searchSubmit(event) {
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", searchSubmit);
 
+function displayForecast() {
+  let forecast = document.querySelector("#forecast");
+  let days = ["Tues", "Wed", "Thurs", "Fri", "Sat"];
+  let forecastHtml = "";
+
+  days.forEach(function (day) {
+    forecastHtml =
+      forecastHtml +
+      `
+<div class="weather-forecast-date">${day}</div>
+        <img src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png" alt="" width="" />
+        <div class="weather-forecast-temperatures"><span class="weather-forecast-temp-max">18°</span><span class="weather-forecast-temp-min"> 12°</span></div>
+      </div>
+        </div>`;
+  });
+
+  forecast.innerHTML = forecastHtml;
+}
+
 searchCity("London");
+displayForecast();

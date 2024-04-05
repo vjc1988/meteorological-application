@@ -9,8 +9,6 @@ function refreshWeather(response) {
   let date = new Date(response.data.time * 1000);
   let iconElement = document.querySelector("#icon");
 
-  console.log(response.data);
-
   temperatureElement.innerHTML = Math.round(temperature);
   cityElement.innerHTML = response.data.city;
   descriptionElement.innerHTML = response.data.condition.description;
@@ -18,8 +16,9 @@ function refreshWeather(response) {
   speedElement.innerHTML = `${response.data.wind.speed}km/h`;
   timeElement.innerHTML = formatDate(date);
   iconElement.innerHTML = `<img src="${response.data.condition.icon_url}"/>`;
-}
 
+  getForecast(response.data.city);
+}
 function formatDate(date) {
   let hours = date.getHours();
   let minutes = date.getMinutes();
@@ -57,7 +56,14 @@ function searchSubmit(event) {
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", searchSubmit);
 
-function displayForecast() {
+function getForecast(city) {
+  let apiKey = "bd69aeefb72b8a36of7aa0db00f9b34t";
+  let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayForecast);
+}
+
+function displayForecast(response) {
+  console.log(response.data);
   let forecast = document.querySelector("#forecast");
   let days = ["Tues", "Wed", "Thurs", "Fri", "Sat"];
   let forecastHtml = "";
@@ -68,13 +74,11 @@ function displayForecast() {
       `
 <div class="weather-forecast-date">${day}</div>
         <img src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png" alt="" width="" />
-        <div class="weather-forecast-temperatures"><span class="weather-forecast-temp-max">18°</span><span class="weather-forecast-temp-min"> 12°</span></div>
-      </div>
-        </div>`;
+        <div class="weather-forecast-temperatures"><span class="weather-forecast-temp-max">18°</span><span class="weather-forecast-temp-min"> 12°</span></div>`;
   });
 
   forecast.innerHTML = forecastHtml;
 }
 
 searchCity("London");
-displayForecast();
+getForecast("London");

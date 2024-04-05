@@ -56,6 +56,13 @@ function searchSubmit(event) {
 let searchFormElement = document.querySelector("#search-form");
 searchFormElement.addEventListener("submit", searchSubmit);
 
+function formatDay(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+
+  return days[date.getDay()];
+}
+
 function getForecast(city) {
   let apiKey = "bd69aeefb72b8a36of7aa0db00f9b34t";
   let apiUrl = `https://api.shecodes.io/weather/v1/forecast?query=${city}&key=${apiKey}&units=metric`;
@@ -63,22 +70,26 @@ function getForecast(city) {
 }
 
 function displayForecast(response) {
-  console.log(response.data);
   let forecast = document.querySelector("#forecast");
   let days = ["Tues", "Wed", "Thurs", "Fri", "Sat"];
   let forecastHtml = "";
 
-  days.forEach(function (day) {
-    forecastHtml =
-      forecastHtml +
-      `
-<div class="weather-forecast-date">${day}</div>
-        <img src="https://ssl.gstatic.com/onebox/weather/64/partly_cloudy.png" alt="" width="" />
-        <div class="weather-forecast-temperatures"><span class="weather-forecast-temp-max">18°</span><span class="weather-forecast-temp-min"> 12°</span></div>`;
+  response.data.daily.forEach(function (day, index) {
+    if (index < 5) {
+      forecastHtml =
+        forecastHtml +
+        `
+<div class="weather-forecast-date">${formatDay(day.time)}</div>
+        <img src="${day.condition.icon_url}" alt="" width="" />
+        <div class="weather-forecast-temperatures"><span class="weather-forecast-temp-max">${Math.round(
+          day.temperature.maximum
+        )}°</span><span class="weather-forecast-temp-min"> ${Math.round(
+          day.temperature.minimum
+        )}°</span></div>`;
+    }
   });
 
   forecast.innerHTML = forecastHtml;
 }
 
 searchCity("London");
-getForecast("London");

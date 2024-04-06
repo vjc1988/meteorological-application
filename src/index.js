@@ -75,17 +75,18 @@ function displayForecast(response) {
   let forecastHtml = "";
 
   response.data.daily.forEach(function (day, index) {
-    if (index < 5) {
+    if (index > 0 && index < 6) {
       forecastHtml =
         forecastHtml +
         `
-<div class="weather-forecast-date">${formatDay(day.time)}</div>
+<div class="weather-forecast-date">${formatDay(day.time)}
         <img src="${day.condition.icon_url}" alt="" width="" />
-        <div class="weather-forecast-temperatures"><span class="weather-forecast-temp-max">${Math.round(
+        <div class="weather-forecast-temperatures">
+        <span class="weather-forecast-temp-max">${Math.round(
           day.temperature.maximum
-        )}°</span><span class="weather-forecast-temp-min"> ${Math.round(
+        )}° </span><span class="weather-forecast-temp-min"> ${Math.round(
           day.temperature.minimum
-        )}°</span></div>`;
+        )}°</span></div></div>`;
     }
   });
 
